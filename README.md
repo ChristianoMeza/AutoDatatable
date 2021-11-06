@@ -1,12 +1,4 @@
 # AutoDatatable
 Creación dinámica de tablas numéricas
 
-
-var adtt = new $.AutoDatatable( $("#div-table-1"), {
-    url : 'json/manager-tables',
-    data : {
-        action     : 'table-26',
-        _desde     : $("#_desde").val(),
-        _hasta     : $("#_hasta").val()
-    }
-},'FAMILIA');
+![image](https://user-images.githubusercontent.com/22845311/140598626-ad77167f-d61e-4732-a972-91664113e24a.png)
