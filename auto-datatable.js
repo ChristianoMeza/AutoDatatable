@@ -233,7 +233,7 @@
             $.each(dataSet[0], function( key, value ) {
                 var item    = {};
                 item.data   = key;
-                item.title  = anoMesString(key);
+                item.title  = key;
 
                 if (key != $this.keyColumn) {
                     item.class  = 'text-right';
