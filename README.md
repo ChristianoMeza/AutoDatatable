@@ -6,7 +6,7 @@ Creación dinámica de tablas numéricas, esta es una extensión para Datatables
 Instalación básica
 ```
 var adtt = new $.AutoDatatable( $("#div-content"), {
-    url : 'miurltojson',
+    url : 'jsonurl',
     //Ajax Params
     data : {
     
