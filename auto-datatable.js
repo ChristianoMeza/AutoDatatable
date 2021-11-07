@@ -114,6 +114,8 @@
             }
         };
 
+        this.sumColumnsIndexData = [];
+
     };
 
     $.AutoDatatable.prototype = {
@@ -210,7 +212,9 @@
                     responseObject = r;
                 },
                 complete:function(){
-                    $this.onDrawTable(responseObject, $this.uuidCreate());        
+                    $this.onDrawTable(responseObject, $this.uuidCreate());       
+                    //Se activa evento ajaxComplete;
+                    $this.events.triggerHandler('ajaxComplete', JSON.parse(responseObject)); 
                 },
                 error: function (r,s,e) {
                     console.log(r.responseText);    
@@ -250,10 +254,6 @@
                         if ($this.explotable.ok) {
 
                             if ($.inArray(key, $this.explotable.ignoreColFromKey) == -1) {
-
-                                console.log($this.explotable.ignoreColFromKey);
-                                console.log(key);
-                           
                                 columnsDef.push({
                                     targets: index,
                                     data   : null,
@@ -320,6 +320,9 @@
 
 
             $this.tableDtt = $('#' + $this.uuid)
+            .on( 'init.dt', function () {
+                $this.events.triggerHandler('completeTotal', $this.sumColumnsIndexData); 
+            } )
             .DataTable( {
                 data           : dataSet,
                 columns        : columns,
@@ -331,7 +334,7 @@
                                 i : 0;     
                     };
                     var api = this.api(), c = 0;
-                    api.columns({ page: 'current'}).every(function () {
+                    api.columns().every(function () {
                         //Si c no esta en alguno de los siguientes array se procede a calcular un total
                         if ($.inArray(c, $this.columInvisible) == -1) {
                             if ($.inArray(c, $this.ignoreTotal) == -1) {
@@ -341,6 +344,9 @@
                                     return intVal(a) + intVal(b);
                                 }, 0 );
                                 $( api.column(c).footer()).html( $this.onNumberFormat(sum));
+
+                                //suma total de las filas
+                                $this.sumColumnsIndexData.push({key : this.header().textContent, value : sum}); 
                             };
                         };
                         c++;
@@ -485,6 +491,10 @@
                         text: '<i class="fas fa-redo"></i>',
                         titleAttr: 'Reload',
                         action: function ( e, dt, node, config ) {
+
+                            //Reinicio de datos
+                            $this.sumColumnsIndexData = [];
+
                             //Destrucción de la tabla
                             $this.tableDtt.clear().destroy();
                             //Reiniciación
@@ -525,7 +535,8 @@
                                 CellKey: Cellkey, 
                                 CellVal: CellVal, 
                                 Data: mdata, 
-                                callbackId: obj.callbackId
+                                callbackId: obj.callbackId,
+                                this : $(this)
                             }
                         );
                     }); 
