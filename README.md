@@ -15,7 +15,7 @@ var adtt = new $.AutoDatatable( $("#div-content"), {
 ```
 Personalización
 
-Quitar totales las columnas
+Quitar totales las columnas, recibe los índices de las columnas
 ```
 adtt.ignoreTotal = [0,1];
 ```
@@ -29,7 +29,7 @@ adtt.events.on('cellexplotable', function(obj) {
 });
 ```
 
-Quitar link de evento por el nombre de la columna
+Quitar link de evento por el nombre de la columna, recibe el nombre de la columna
 ```
 dtt.explotable.ignoreColFromKey = ["TOTAL"];
 ```
