@@ -87,6 +87,22 @@ adtt.onPrepareLogo('pathtoImgJpg').then(
 );
 ```
 
+Recupera el array de datos de Ajax
+```
+adtt.events.on('ajaxComplete', function(data) {
+    console.log(data);
+});
+
+```
+
+Recupera en un array la suma de las columnas
+```
+adtt.events.on('completeTotal', function(data) {
+    console.log(data);
+});
+
+```
+
 Ejemplo completo, PRODUCTO representa la columna Clave que es muy importante para el dibujo de la tabla
 
 En tu archivo HTML
