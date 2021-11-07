@@ -1,3 +1,7 @@
+//Extensión para crear tablas dinamicas de números
+//ideal uso para linea de tiempo
+//Christián Meza
+
 //JSON en entrada
 /*[
     {
@@ -241,55 +245,62 @@
                 columns.push(item); 
                 doomTfoot += "<th></th>";
 
+              
+                    if ($.inArray(index, $this.columInvisible) == -1){ 
+                        if ($this.explotable.ok) {
 
-                if ($this.explotable.ok) {
-                    if ($.inArray(key, $this.explotable.ignoreColFromKey)) {
+                            if ($.inArray(key, $this.explotable.ignoreColFromKey) == -1) {
 
-                        columnsDef.push({
-                            targets: index,
-                            data   : null,
-                            render: function ( data, type, row ) {
-                                if ($.isNumeric(data)) {
-                                    if (data > $this.explotable.minValue) {
-                                        return "<a href='javascript:void(0)' class='text-right cellexplotable'>" + $this.onNumberFormat(data) + "</a>";
-                                    };
-                                    return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
-                                }else{
-                                    return "<a href='javascript:void(0)' class='cellexplotable'>" + data + "</a>";
-                                };
-                            },
-                            defaultContent: ""
-                        });
+                                console.log($this.explotable.ignoreColFromKey);
+                                console.log(key);
+                           
+                                columnsDef.push({
+                                    targets: index,
+                                    data   : null,
+                                    render: function ( data, type, row ) {
+                                        if ($.isNumeric(data)) {
+                                            if (data > $this.explotable.minValue) {
+                                                return "<a href='javascript:void(0)' class='text-right cellexplotable'>" + $this.onNumberFormat(data) + "</a>";
+                                            };
+                                            return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
+                                        }else{
+                                            return "<a href='javascript:void(0)' class='cellexplotable'>" + data + "</a>";
+                                        };
+                                    },
+                                    defaultContent: ""
+                                });
 
-                    }else{
+                            }else{
 
-                        columnsDef.push({
-                            targets: index,
-                            data   : null,
-                            render: function ( data, type, row ) {
-                                if ($.isNumeric(data)) {
-                                    return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
-                                };
-                                return data;
-                            },
-                            defaultContent: ""
-                        });
+                                columnsDef.push({
+                                    targets: index,
+                                    data   : null,
+                                    render: function ( data, type, row ) {
+                                        if ($.isNumeric(data)) {
+                                            return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
+                                        };
+                                        return data;
+                                    },
+                                    defaultContent: ""
+                                });
 
-                    };
-                }else{
-
-                    columnsDef.push({
-                        targets: index,
-                        data   : null,
-                        render: function ( data, type, row ) {
-                            if ($.isNumeric(data)) {
-                                return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
                             };
-                            return data;
-                        },
-                        defaultContent: ""
-                    });
-                };
+                        }else{
+
+                            columnsDef.push({
+                                targets: index,
+                                data   : null,
+                                render: function ( data, type, row ) {
+                                    if ($.isNumeric(data)) {
+                                        return "<p class='text-right'>" + $this.onNumberFormat(data) + "</p>";
+                                    };
+                                    return data;
+                                },
+                                defaultContent: ""
+                            });
+                        };
+                    };
+
                 index++;
             });
 
